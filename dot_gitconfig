@@ -1,0 +1,12 @@
+[user]
+	name = Orange-position0
+	email = 13963804+orangegithub@user.noreply.gitee.com
+[core]
+	symlinks = true
+    	untrackedCache = true
+    	fsmonitor = true
+[maintenance]
+ 	auto = false
+	strategy = incremental
+[fetch]
+    writeCommitGraph = true
