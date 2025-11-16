@@ -1,0 +1,306 @@
+" ================================================================================================
+" 🐧🐧🐧 Basic settings 🐧🐧🐧
+" ================================================================================================
+" 设置全局剪贴板
+set clipboard=unnamedplus
+
+" 显示当前vim模式(normal/insert/visual)
+set showmode
+
+" 将 scroll off 的行数设置为0，即关闭自动滚动偏移（避免跳转时页面抖动）
+set scrolloff=0
+
+" 启动增量搜索（搜索时实时匹配高亮）
+set incsearch
+
+" 启动高亮搜索（将搜索匹配的文本高亮显示）
+set hlsearch
+
+" 显示行号和相对行号
+set number relativenumber
+
+"在搜索时忽略大小写
+set ignorecase
+
+"设置返回normal模式时回到英文输入法
+set keep-english-in-normal
+
+"启用鼠标
+set mouse=a
+
+"强制Normal模式下使用英文输入法，避免避免输入法频繁切换
+set keep-english-in-normal
+
+" 开启idea智能行连接（类似 J 命令但更智能）
+set ideajoin
+
+" 关闭插件的蜂鸣声
+set visualbell
+
+" 状态栏图标颜色
+set ideastatusicon=gray
+
+" 重构时保留历史记录
+set idearefactormode=keep
+
+" 复制时高亮内容
+set highlightedyank
+
+
+" ================================================================================================
+" 🔧🔧🔧 Plugins 🔧🔧🔧
+" ================================================================================================
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" 快速注释(use 'gc/gcc' for commenting )
+" Usage: 单行注释（gcc）
+set commentary
+
+" 类似 vim-surround
+set surround
+
+" 多光标支持
+set multiple-cursors
+
+" 文件树导航（映射到 Idea 的 project 视图）
+set NERDTree
+
+" 方便地操作函数参数，将函数参数作为一种文本对象
+set argtextobj
+" 配置插件识别为文本对象的配对符号
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" 显示可用快捷键
+set which-key " 需要先在插件商店中下载
+set notimeout " 表示超过一定时间后，自动取消快捷键，这里设置为一直等待输入，一般配合WhichKey使用
+
+
+" ================================================================================================
+" 🌍🌍🌍 No Leader Keymaps 🌍🌍🌍
+" ================================================================================================
+" Shift + h 向左移动 tab 标签页
+nmap <S-h> <action>(PreviousTab)
+" Shift + l 向右移动 tab 标签页
+nmap <S-l> <action>(NextTab)
+" 将 ge 映射成鼠标悬浮在错误的地方上的时候显示错误提示
+map ge <Action>(ShowErrorDescription)
+" 将 gh 映射成鼠标悬浮在变量上方的时候显示文档
+map gh <Action>(QuickJavaDoc)
+
+
+" ================================================================================================
+" 📁📁📁️ Leader Keymaps Catalog 📁📁📁
+" ================================================================================================
+" ========== A ==========
+" ========== B ==========
+" bp: BreakPoint
+" ========== C ==========
+" ca: CloseAllTabs-关闭所有标签页
+" co: CloseOtherTabs-关闭其他所有标签页(除当前tab外)
+" ========== D ==========
+" db: Debug
+" ========== E ==========
+" e: NERDTreeToggle
+" ========== F ==========
+" ff: FindFile-快速查找(ctrl + n)
+" fl: FindFileLocation-在项目视图中定位并选中当前正在编辑的文件
+" ========== G ==========
+" gg: Generate-打开右键菜单中的Generate(Alt + Insert)
+" gc: Generate Constructor-生成构造函数(ctrl + alt + insert)
+" gd: ShowGitFileHistory-显示当前文件的git历史记录
+" ========== H ==========
+" ========== I ==========
+" ========== J ==========
+" ========== K ==========
+" ========== L ==========
+" ========== M ==========
+" ========== N ==========
+" ========== O ==========
+" ========== P ==========
+" ========== Q ==========
+" q: quit-关闭当前tab
+" ========== R ==========
+" rc: RunClass-运行当前类(ctrl + shift + f10)
+" rr: Rerun-重新运行最近一次运行的程序或测试(Ctrl + Shift + F10)
+" ru: run-运行最近一次运行的程序或测试(Ctrl + F10)
+" ========== S ==========
+" st: Stop-停止运行
+" ss: ShowStructure-显示当前打开文件的文件结构(Alt + 7)
+" sp: ShowParameterInfo-显示方法或函数的参数信息(ctrl + p)
+" ========== T ==========
+" ========== U ==========
+" ========== V ==========
+" ========== W ==========
+" ========== X ==========
+" ========== Y ==========
+" ========== Z ==========
+
+
+" ================================================================================================
+" ⭐️⭐️⭐️ Leader Keymaps ⭐️⭐️⭐️
+" ================================================================================================
+" 将<leader>设置为 空格键
+" 可自行更改，只需更改双引号内的内容即可
+" 推荐<leader>:  "空格"  ";"  "\"  "-"  ","
+let mapleader = " "
+
+
+" ========== B ==========
+" 打断点/解除断点
+nmap <leader>bp <action>(ToggleLineBreakpoint)
+let g:WhichKeyDesc_DeBugOrDelete = "<leader>bp 调试&删除"
+
+
+" ========== C ==========
+let g:WhichKeyDesc_CodeAndClose = "<leader>c Code&关闭"
+
+" 关闭所有标签页
+nmap <leader>ca <action>(CloseAllEditors)
+let g:WhichKeyDesc_CodeAndClose_CloseAllEditors = "<leader>ca 关闭所有标签页"
+
+" 关闭其他所有标签页
+nmap <leader>co :action CloseAllEditorsButActive<CR>
+let g:WhichKeyDesc_CodeAndClose_CloseAllEditorsButActive = "<leader>co 关闭其他标签页"
+
+
+" ========== D ==========
+let g:WhichKeyDesc_DeBugOrDelete= "<leader>d 调试&删除"
+
+" Debug
+nmap <leader>db <action>(Debug)
+let g:WhichKeyDesc_DebugOrDelete_DeBug = "<leader>db 调试"
+
+
+" ========== E ==========
+" NERDTree Keymaps(Beneath)
+
+
+" ========== F ==========
+let g:WhichKeyDesc_FindOrFormat = "<leader>f 查找&格式化"
+" ===== Search in project =====
+" 文件搜索, = ctrl + shift + n
+nmap <leader>ff <action>(GotoFile)
+let g:WhichKeyDesc_FindOrFormat_FindFile = "<leader>ff 查找文件"
+
+" Action搜索, = ctrl + shift + a
+nmap <leader>fc <action>(GotoAction)
+let g:WhichKeyDesc_FindOrFormat_FindAction = "<leader>fc 查找Action"
+
+
+" ========== G ==========
+let g:WhichKeyDesc_GitOrGenerate = "<leader>g Git&构造"
+" 打开右键菜单中的Generate
+nmap <leader>gg <action>(Generate)
+let g:WhichKeyDesc_Generate = "<leader>gg 打开Generate"
+
+"生成构造器
+nmap <leader>gc :action GenerateConstructor<CR>
+let g:WhichKeyDesc_GitOrGenerate_GenerateConstructor = "<leader>gc 生成构造器"
+
+" diff 显示文件的版本控制历史
+nmap <leader>gd <action>(Vcs.ShowTabbedFileHistory)
+let g:WhichKeyDesc_DebugOrDelete_ShowTabbedFileHistory = "<leader>gd git diff"
+
+
+" ========== Q ==========
+" leader + c 关闭当前的 editor 页
+nmap <leader>q :q<CR>
+
+
+" ========== R ==========
+let g:WhichKeyDesc_RunOrRe = "<leader>r 运行&重试"
+
+"运行当前编辑器中的文件或类(Shift + F10)
+let g:WhichKeyDesc_RunOrRe_RunClass = "<leader>rc 运行当前文件"
+nmap <leader>rc :action RunClass<CR>
+
+"重新运行最近一次运行的程序或测试(Ctrl + Shift + F10)
+let g:WhichKeyDesc_RunOrRe_ReRun = "<leader>rr 重新运行"
+nmap <leader>rr <action>(Rerun)
+
+"运行
+let g:WhichKeyDesc_RunOrRe_Run = "<leader>ru 运行"
+map <leader>ru <action>(Run)
+
+
+" ========== S ==========
+let g:WhichKeyDesc_Show = "<leader>s 显示&终止"
+
+" Stop
+nmap <leader>st <action>(Stop)
+let g:WhichKeyDesc_Show_Stop = "<leader>st Stop"
+
+" ShowStructure
+nmap <leader>ss <action>(ShowStructure)
+let g:WhichKeyDesc_Show_ShowStructure = "<leader>ss 显示当前文件的文件结构"
+
+" ShowParameterInfo
+nmap <leader>sp <action>(ShowParameterInfo)
+let g:WhichKeyDesc_Show_ShowParameterInfo = "<leader>sp 显示方法/函数的参数信息"
+
+
+" ========== Z ==========
+" 折叠/展开 功能可以用原生vim的快捷键
+" leader + zo 展开当前的 editor 中的所有的代码块，只是在 java 代码中生效
+" nmap <leader>zo <action>(ExpandAllRegions)
+" leader + zc 折叠当前的 editor 中的所有的代码块，只是在 java 代码中生效
+" nmap <leader>zc <action>(CollapseAllRegions)
+
+
+
+" ================================================================================================
+" ⛏️⛏️⛏️ Handler ⛏️⛏️⛏️
+" ================================================================================================
+" Handler描述的是在idea与vim相同的快捷键中，需要选择一种作为标准
+" 使用 'sethandler <key> <handler>' 来覆盖特定的快捷键设置
+""" VIM
+" visual block-mode
+sethandler <C-V> a:vim
+" 递增操作
+sethandler <C-A> a:vim
+" 向下滚动半屏
+sethandler <C-D> a:vim
+" 重绘屏幕并清除高亮
+sethandler <C-L> a:vim
+" 重做撤销，命令/搜索模式中插入寄存器内容
+sethandler <C-R> a:vim
+" 在跳转列表中向前跳转
+sethandler <C-O> a:vim
+" 配置wsvq执行窗口操作
+sethandler <C-W> a:vim
+
+""" IDEA
+" 跳转到变量、方法或类的定义处
+sethandler <C-B> a:ide
+" 在当前文件中查找
+sethandler <C-F> a:ide
+" 可将 Ctrl+J/K 映射为上/下箭头（需要提前在idea中设置）
+sethandler <C-J> a:ide
+sethandler <C-K> a:ide
+
+
+" ================================================================================================
+" 🌲🌲🌲 NERDTree 🌲🌲🌲
+" ================================================================================================
+" IDEA 中的 Project 工具窗口为原生文件树，功能比NERDTree更强大，但很多NERDTree的快捷键不支持
+" nmap <leader>e <action>(ActivateProjectToolWindow)
+" leader + e 打开左侧的 Project 栏目，也能使用 IDEA 中的 Alt + 1
+" Attention: 若已经在 NERDTree 中，再次按下 <leader>e 不会关闭，而是搜索。正确做法：用esc退到tab页中再按 <leader>e，才能关闭
+nmap <leader>e :NERDTreeToggle<CR>
+" 将焦点放到 NERDTree 窗口
+nmap <leader>nn :NERDTreeFocus<CR>
+" 在NERDTree中定位到当前文件
+" nmap <leader>f :NERDTreeFind<CR>
+
+"===== NERDTree native shortcuts =====
+" - `o`: 打开文件/目录
+" - `i`: 在分窗口中打开
+" - `go`: 打开文件/目录，但光标仍在NERDTree中
+" - `m`: 显示操作菜单
+" - `k/j`: 上下跳转文件/目录
+" - `<C-J>`/`<C-K>`: 在同级别目录中上下跳转
+" - `x`: 折叠当前节点的父节点
+" - `q`: Close the nerdtree window
+" - `d`: delete file or directory
+" - `n`: create file
+" - `N`: create directory
