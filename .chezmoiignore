@@ -1,0 +1,6 @@
+# Ignore Windows-only configs on non-Windows systems
+# glazewm & yasb config
+{{ if ne .chezmoi.os "windows" }}
+dot_glzr/
+dot_config/yasb/
+{{ end }}
