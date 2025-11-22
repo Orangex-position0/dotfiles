@@ -121,13 +121,25 @@ window_behavior:
 
 workspaces:
   - name: '1'
+    display_name: "[1]🌐Web"
+
   - name: '2'
+    display_name: "[2]💻CodeⅠ"
+
   - name: '3'
+    display_name: "[3]💻CodeⅡ"
+
   - name: '4'
+
   - name: '5'
+
   - name: '6'
+
   - name: '7'
+    display_name: "[7]🎮Gaming"
+
   - name: '8'
+
   - name: '9'
 
 window_rules:
@@ -152,6 +164,11 @@ window_rules:
       - window_process: { equals: 'WINWORD' }
         window_class: { not_regex: 'OpusApp' }
       - window_process: { equals: 'POWERPNT' }
+
+  # ==================== 指定部分程序窗口为平铺模式 ====================
+  - commands: ['set-tiling']
+    match:
+      - window_process: { equals: "Code.exe" }
 
   # ==================== 指定部分程序窗口为浮动模式 ====================
   # Steam 的主窗口和某些弹窗是 非标准窗口（Non-standard / Chromium Embedded Framework + GPU 复合模式），而GlazeWM只管理普通窗口
