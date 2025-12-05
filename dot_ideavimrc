@@ -86,6 +86,10 @@ nmap <S-l> <action>(NextTab)
 map ge <Action>(ShowErrorDescription)
 " 将 gh 映射成鼠标悬浮在变量上方的时候显示文档
 map gh <Action>(QuickJavaDoc)
+" GotoDeclaration 跳转到定义
+nmap gd <action>(GotoDeclaration)
+" 显示函数文档
+nmap K <action>(QuickJavaDoc)
 
 
 " ================================================================================================
