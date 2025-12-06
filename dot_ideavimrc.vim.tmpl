@@ -1,0 +1,19 @@
+" ----------------------
+" IDEAVim 配置
+" ----------------------
+
+" 公共配置
+set number
+nnoremap <leader>w :w<CR>
+
+" 系统差异配置
+{{- if eq .chezmoi.os "windows" -}}
+" Windows 特有映射或插件路径
+let g:vim_windows_specific = 1
+{{- else if eq .chezmoi.os "darwin" -}}
+" macOS 特有映射或插件路径
+let g:vim_macos_specific = 1
+{{- else if eq .chezmoi.os "linux" -}}
+" Linux 特有映射或插件路径
+let g:vim_linux_specific = 1
+{{- end -}}
