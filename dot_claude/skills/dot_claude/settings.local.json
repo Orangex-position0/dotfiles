@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 /Users/chengzixu/.claude/skills/skill-creator/scripts/init_skill.py tech-blog-coach --path /Users/chengzixu/.claude/skills)"
+    ]
+  }
+}
