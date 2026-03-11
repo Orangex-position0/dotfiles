@@ -132,3 +132,6 @@
 		- 增量发布：接口变化是，先发布新版本接口，同时保留旧版本接口，后续逐步替换旧接口
 - 文档更新记录
 	- 接口文档的更新要有对应的变更记录
+
+## 额外事项
+Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
