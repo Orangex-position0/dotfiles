@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Orangex-position0/.claude/skills/skill-creator/**)",
+      "Bash(python scripts/init_skill.py ppp-generator --path /c/Users/Orangex-position0/.claude/skills)",
+      "Bash(chezmoi managed:*)",
+      "Bash(chezmoi status:*)"
+    ]
+  }
+}
