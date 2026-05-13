@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf \"$HOME/.claude/skills/codebase-learner\")",
+      "Bash(cp -r \"E:/test/References/codebase-to-course\" \"$HOME/.claude/skills/codebase-learner\")",
+      "Read(//e/test/References/codebase-to-course/$HOME/.claude/skills/**)"
+    ]
+  }
+}
