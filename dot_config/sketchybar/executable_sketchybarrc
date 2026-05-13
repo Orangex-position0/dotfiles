@@ -1,0 +1,146 @@
+# A simple sketchybar config for aerospace users to get started with
+# Not too different from the base starting config!
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+ITEM_DIR="$CONFIG_DIR/items"
+
+#### Import Colors
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors
+
+#### Workspace Icon Mapping Function (YASB style)
+get_workspace_icon() {
+  local workspace_id=$1
+  case "$workspace_id" in
+    1) echo "1🌐" ;;
+    2) echo "2💻" ;;
+    3) echo "3💻" ;;
+    4) echo "4📄" ;;
+    7) echo "7🎮" ;;
+    *) echo "$workspace_id" ;;
+  esac
+}
+
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+
+sketchybar --bar position=top height=40 radius=30 color=$BAR_COLOR #color=0xff001f30 color=0x40000000
+
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
+
+default=(
+  padding_left=3
+  padding_right=3
+  icon.font="Hack Nerd Font:Bold:15.0"
+  label.font="SF Pro:Semibold:15.0"
+  #icon.color=0xffffffff
+  icon.color=$WHITE
+  #label.color=0xffffffff
+  label.color=$WHITE
+  icon.padding_left=2
+  icon.padding_right=2
+  label.padding_left=2
+  label.padding_right=2
+  updates=on
+)
+sketchybar --default "${default[@]}"
+
+##### Adding aeropsace layouts #####
+
+# Add the aerospace_workspace_change event we specified in aerospace.toml
+sketchybar --add event aerospace_workspace_change
+
+# Add workspaces for all monitors
+for monitor in $(aerospace list-monitors --format "%{monitor-appkit-nsscreen-screens-id}"); do
+  for sid in $(aerospace list-workspaces --monitor "$monitor"); do
+    # Determine which display this workspace should be shown on
+    # 所有工作区都显示在主显示器上（单显示器设置）
+    display_id="1"
+    
+    # Get semantic icon for this workspace
+    WORKSPACE_ICON=$(get_workspace_icon "$sid")
+
+    sketchybar --add item space.$sid left \
+      --set space.$sid display="$display_id" \
+      --subscribe space.$sid aerospace_workspace_change \
+      --set space.$sid \
+      drawing=on \
+      background.color=0x44ffffff \
+      background.corner_radius=5 \
+      background.drawing=on \
+      background.border_color=0xAAFFFFFF \
+      background.border_width=0 \
+      background.height=22 \
+      icon="$WORKSPACE_ICON" \
+      icon.font="Hack Nerd Font:Bold:14.0" \
+      icon.padding_left=6 \
+      icon.padding_right=6 \
+      icon.shadow.distance=4 \
+      icon.shadow.color=0xA0000000 \
+      label="" \
+      label.font="sketchybar-app-font:Regular:12.0" \
+      label.padding_right=8 \
+      label.padding_left=2 \
+      label.y_offset=-1 \
+      label.shadow.drawing=off \
+      label.shadow.color=0xA0000000 \
+      label.shadow.distance=4 \
+      click_script="aerospace workspace $sid" \
+      script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+  done
+done
+
+# Initialize workspace states on startup
+for monitor in $(aerospace list-monitors); do
+  for sid in $(aerospace list-workspaces --monitor "$monitor"); do
+    # Check if workspace has windows
+    has_windows=$(aerospace list-windows --workspace "$sid" 2>/dev/null | grep -c "^." || echo "0")
+
+    if [ "$has_windows" -gt 0 ]; then
+      # Workspace has windows: show it
+      sketchybar --set space.$sid drawing=on icon.color=0xffffffff
+    else
+      # Empty workspace: hide it initially (will be shown when windows are added)
+      sketchybar --set space.$sid drawing=off
+    fi
+  done
+done
+
+
+#front app
+source "$ITEM_DIR/front_app.sh"
+
+
+##### Adding Right Items #####
+# In the same way as the left items we can add items to the right side.
+# Additional position (e.g. center) are available, see:
+# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+
+# Some items refresh on a fixed cycle, e.g. the clock runs its script once
+# every 10s. Other gititems respond to events they subscribe to, e.g. the
+# volume.sh script is only executed once an actual change in system audio
+# volume is registered. More info about the event system can be found here:
+# https://felixkratz.github.io/SketchyBar/config/events
+
+sketchybar --add item clock right \
+  --set clock update_freq=10 script="$PLUGIN_DIR/clock.sh" \
+  --add item volume right \
+  --set volume script="$PLUGIN_DIR/volume.sh" \
+  --subscribe volume volume_change \
+  --add item battery right \
+  --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+  --subscribe battery system_woke power_source_change \
+  --add item swap e \
+  icon="" \
+  label.font="Hack Nerd Font:Italic:13.0" \
+  icon.color=0x44FFFFFF \
+  label.color=0x44FFFFFF
+
+##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --update
