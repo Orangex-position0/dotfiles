@@ -8,6 +8,14 @@ dot_config/yazi/plugins/**
 dot_config/yazi/flavors/**
 dot_config/yazi/cache/**
 dot_config/yazi/state.toml
+
+
+# Ignore macOS-only configs on non-macOS systems
+# Sketchybar & Aerospace
+{{ if ne .chezmoi.os "darwin" }}
+dot_config/sketchybar/
+dot_config/aerospace/
+{{ end }}
+
 # 忽略所有 Claude Code 的打包 skill 文件
 .claude/skills/*.skill
-
