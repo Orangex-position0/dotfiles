@@ -1,0 +1,64 @@
+---
+description: "DDD (Domain-Driven Design) implementation guide - copy to project .claude/rules/ when starting a DDD project"
+alwaysApply: false
+---
+
+# 领域驱动设计 (DDD) 实施指南
+
+> 使用前请先判断项目是否属于 DDD 架构，再决定是否启用本指南。
+
+## DDD 架构概述
+
+- **领域驱动设计 (Domain-Driven Design)：** 采用 Domain Model（领域模型）并结合 SOLID 设计原则，以业务领域为核心组织代码结构。
+- **渐进式开发策略：** 每写一个单元就进行一轮测试，避免后期全局修改和发现系统性问题。
+- **领域边界清晰：** 通过明确的 domain 关系对应，减少设计偏差和架构混乱。
+- **AI 辅助质量保障：** 结合 AI 工具提升软件设计和技术管理的标准，但核心的设计决策和质量把控仍需人工判断。
+
+## 领域模型组织
+
+- **领域边界划分：** 根据业务领域划分有界上下文（Bounded Context），每个上下文内部保持概念的一致性
+- **领域对象设计：**
+  - **实体(Entity)：** **具有唯一标识的对象**，用于表达领域中的核心业务概念。实体 = 唯一标识 + 状态属性 + 行为动作（功能），常位于 `model/entity/` 目录下。
+  - **值对象 (Value Object)：** 用于描述领域的某个方面但**无独立身份标识的对象**，通常用于配合实体对象使用，减少Entity的关联性，常位于 `model/valobj/` 目录下。
+  - **聚合根 (Aggregate Root)：** 作为聚合的入口点，确保业务规则的一致性。
+  - **领域服务 (Domain Service)：** 封装无法归属到特定实体的业务逻辑，存放处理领域逻辑的组件，用于协调Entity 和 Value Object之间的操作。
+
+## 分层架构实现
+
+- **接口定义-api** ：因为微服务中引用的 RPC 需要对外提供接口的描述信息，也就是调用方在使用的时候，需要引入 Jar 包，让调用方好能依赖接口的定义做代理。
+  - http接口依赖倒置：将Controller层的http请求接口定义在api层，而Trigger层提供具体实现。API层（接口定义）→ Trigger层（具体实现）→ Domain层（业务逻辑）。
+  - DTO对象：供http接口使用
+- **应用封装-app** ：这是应用启动和配置的一层，如一些 aop 切面或者 config 配置，以及打包镜像都是在这一层处理。你可以把它理解为专门为了启动服务而存在的。
+  - 存放配置文件：如 `application.yml` 文件，Redis配置类等
+  - 存放mapper文件：如mybatis的 `mapper.xml` 文件
+- **领域封装-domain** ：领域模型服务，在一层中会有一个个细分的领域服务，在每个服务包中会有【model、repository、service】3部分。
+  - model：存放entity、valobj、aggregate
+  - repository：定义仓储接口，实现类写在infrastructure中
+  - service：编写领域核心业务逻辑
+- **仓储服务-infrastructure** ：基础层依赖于 domain 领域层，因为在 domain 层定义的仓储接口需要在基础层实现。这是**依赖倒置**的一种设计方式。
+  - dao包：存Dao接口
+  - po包：存po对象
+  - repository：编写domain中仓储接口的实现类
+- **触发操作-trigger** ：触发器层，用于提供接口实现、消息接收、任务执行等。所以对于这样的操作，小傅哥把它叫做触发器层。
+  - http：编写api中http接口的实现类作为Controller层
+  - job：编写定时任务
+  - listener：编写消息队列相关逻辑
+- **类型定义-types** ：通用类型定义层，在我们的系统开发中，会有很多类型的定义，包括；基本的 Response、Constants 和枚举。它会被其他的层进行引用使用。
+  - Constants：常量定义
+  - ResponseCode：统一响应
+  - AppException：自定义异常类
+  - ResponseCode：响应码枚举
+  - BaseEvent：基础事件抽象类
+- **领域编排-case（可选）**：对于较大且复杂的项目，为了防腐和提供通用服务，一般会用case层对domain领域的逻辑进行封装组合处理
+
+## 统一语言 (Ubiquitous Language)
+
+- **命名一致性：** 代码中的类名、方法名、变量名应与业务术语保持一致
+- **权限命名规范：** 使用 `模块名:功能名:操作名` 格式，体现业务领域结构
+- **文档同步：** 确保代码、文档和业务人员使用相同的术语
+
+## 领域事件处理
+
+- **事件驱动架构：** 通过领域事件实现不同聚合之间的松耦合通信
+- **事件存储：** 记录重要的业务事件，支持事件溯源和审计
+- **异步处理：** 对于复杂的业务流程，使用异步事件处理提高系统性能
