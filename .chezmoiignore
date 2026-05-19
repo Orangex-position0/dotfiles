@@ -19,3 +19,12 @@ dot_config/aerospace/
 
 # 忽略所有 Claude Code 的打包 skill 文件
 .claude/skills/*.skill
+
+# Zed editor config - 各平台只保留对应路径
+{{- if ne .chezmoi.os "windows" }}
+AppData/Roaming/Zed/
+{{- end }}
+
+{{- if eq .chezmoi.os "windows" }}
+.config/zed/
+{{- end }}

@@ -1,0 +1,196 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+    "project_panel": {
+        "dock": "left",
+    },
+    "outline_panel": {
+        "dock": "left",
+    },
+    "collaboration_panel": {
+        "dock": "left",
+    },
+    "agent": {
+        "dock": "right",
+        "favorite_models": [],
+        "model_parameters": [],
+    },
+    "git_panel": {
+        "dock": "left",
+    },
+
+    // ========== 1.Appearance ==========
+    "vim_mode": true,
+    "theme": {
+        "mode": "dark",
+        "light": "One Dark",
+        "dark": "Catppuccin Macchiato",
+    },
+    "icon_theme": {
+        "mode": "light",
+        "light": "Catppuccin Macchiato",
+        "dark": "Catppuccin Macchiato",
+    },
+    "base_keymap": "JetBrains",
+    "ui_font_size": 18,
+    // 代码编辑区（Buffer）的字体样式
+    "buffer_font_family": "JetBrains Mono",
+    "buffer_font_size": 16,
+    "buffer_font_weight": 500,
+    "relative_line_numbers": "enabled",
+    "tabs": {
+        "file_icons": true,
+        "git_status": true,
+    },
+    "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
+        "show_background": true,
+    },
+    "indent_guides": {
+        "enabled": true,
+        "line_width": 2,
+        "active_line_width": 3,
+        "coloring": "fixed",
+        "background_coloring": "disabled",
+    },
+
+    // ========== 2.Basic ==========
+    "tab_size": 4,
+    // 启用文件保存时自动格式化功能
+    "format_on_save": "on",
+    "restore_on_startup": "last_workspace",
+    "vertical_scroll_margin": 6,
+    "extend_comment_on_newline": false,
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/CVS",
+
+        "**/.DS_Store",
+        "**/Thumbs.db",
+
+        "**/.classpath",
+        "**/.settings",
+
+        "**/node_modules",
+        "**/vendor",
+
+        "**/target",
+        "**/dist",
+        "**/build",
+        "**/.next",
+
+        "**/.cache",
+        "**/.turbo",
+
+        "**/*.min.js",
+        "**/*.lock",
+
+        "**/.tmp*",
+    ],
+
+    // ===== 2.1 terminal =====
+    "terminal": {
+        "font_family": "JetBrainsMonoNL Nerd Font",
+        "copy_on_select": true,
+    },
+
+    // ===== 2.2 git =====
+    "git": {
+        "git_gutter": "tracked_files",
+        "gutter_debounce": 100,
+        "inline_blame": {
+            "enabled": false,
+        },
+        "branch_picker": {
+            "show_author_name": false,
+        },
+        "hunk_style": "staged_hollow",
+    },
+
+    // ========== 3.Development ==========
+    "languages": {
+        "Rust": {
+            "tab_size": 4,
+            "formatter": {
+                "external": {
+                    "command": "rustfmt",
+                },
+            },
+        },
+
+        "Go": {
+            "code_actions_on_format": {
+                "source.organizeImports": true,
+                "source.fixAll.eslint": true,
+            },
+            "formatter": [],
+        },
+
+        "TypeScript": {
+            "formatter": [
+                {
+                    "external": {
+                        "command": "prettier",
+                        "arguments": ["--stdin-filepath", "{buffer_path}"],
+                    },
+                },
+                { "code_action": "source.organizeImports" },
+                { "code_action": "source.fixAll.eslint" },
+            ],
+        },
+
+        "JavaScript": {
+            "formatter": [
+                {
+                    "external": {
+                        "command": "prettier",
+                        "arguments": ["--stdin-filepath", "{buffer_path}"],
+                    },
+                },
+                { "code_action": "source.fixAll.eslint" },
+            ],
+        },
+
+        "TSX": {
+            "formatter": [
+                {
+                    "external": {
+                        "command": "prettier",
+                        "arguments": ["--stdin-filepath", "{buffer_path}"],
+                    },
+                },
+                { "code_action": "source.organizeImports" },
+                { "code_action": "source.fixAll.eslint" },
+            ],
+        },
+    },
+
+    "lsp": {
+        "rust-analyzer": {
+            "initialization_options": {
+                "checkOnSave": {
+                    "command": "clippy",
+                },
+            },
+        },
+
+        "eslint": {
+            "settings": {
+                "codeActionOnSave": {
+                    "rules": ["import/order"],
+                },
+            },
+        },
+    },
+}

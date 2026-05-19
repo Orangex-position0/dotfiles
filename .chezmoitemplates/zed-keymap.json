@@ -1,0 +1,101 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+    {
+        "context": "Workspace",
+        "bindings": {
+            // "shift shift": "file_finder::Toggle"
+        },
+    },
+    {
+        "context": "Editor",
+        "bindings": {
+            "ctrl-a": "editor::SelectAll",
+            "ctrl-w": "pane::CloseActiveItem",
+            "alt-enter": "editor::ToggleCodeActions",
+        },
+    },
+    {
+        "context": "Editor && VimControl",
+        "bindings": {
+            // ===== No Leader Key =====
+            "H": "pane::ActivatePreviousItem",
+            "L": "pane::ActivateNextItem",
+            "g d": "editor::GoToDefinition",
+            "g D": "editor::GoToDeclaration",
+            "g t": "editor::GoToTypeDefinition",
+            "g i": "editor::GoToImplementation",
+            // ===== Leader Key =====
+            // leader key = <space>
+            "space c f": "editor::Format",
+            "space c r": "editor::Rename",
+            "space c a": "pane::CloseAllItems",
+            "space e": "project_panel::ToggleFocus",
+        },
+    },
+    {
+        "context": "Editor && vim_mode == insert",
+        "bindings": {
+            // "j k": "vim::NormalBefore"
+        },
+    },
+    {
+        "context": "ProjectPanel && not_editing",
+        "bindings": {
+            // =========================
+            // Navigation
+            // =========================
+            "j": "menu::SelectNext",
+            "k": "menu::SelectPrevious",
+            "h": "project_panel::CollapseSelectedEntry",
+            "l": "project_panel::ExpandSelectedEntry",
+
+            // =========================
+            // Open / Preview
+            // =========================
+            "o": "project_panel::Open",
+            "enter": "project_panel::Open",
+
+            // =========================
+            // File operations
+            // =========================
+            "a": "project_panel::NewFile",
+            "A": "project_panel::NewDirectory",
+            "r": "project_panel::Rename",
+            "d": "project_panel::Delete",
+            "x": "project_panel::Cut",
+            "c": "project_panel::Copy",
+            "p": "project_panel::Paste",
+
+            // =========================
+            // Path utilities
+            // =========================
+            "y p": "workspace::CopyPath",
+            "y r": "workspace::CopyRelativePath",
+
+            // =========================
+            // Search (like NERDTree plugin extras)
+            // =========================
+            "/": "file_finder::Toggle",
+
+            // =========================
+            // Exit / focus
+            // =========================
+            "escape": "project_panel::ToggleFocus",
+        },
+    },
+    {
+        "context": "Dock || Terminal || Editor && !VimControl",
+        "bindings": {
+            "ctrl-h": "workspace::ActivatePaneLeft",
+            "ctrl-l": "workspace::ActivatePaneRight",
+            "ctrl-k": "workspace::ActivatePaneUp",
+            "ctrl-j": "workspace::ActivatePaneDown",
+        },
+    },
+]
