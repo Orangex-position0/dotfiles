@@ -10,6 +10,8 @@ English | [简体中文](README.zh-CN.md)
 - `dot_ideavimrc` - IdeaVim configuration file for JetBrains IDEs
 - `dot_config/yasb/` - YASB (Yet Another Status Bar) configuration files
 - `dot_glzr/glazewm/` - GlazeWM configuration files for Windows tiling window manager
+- `dot_config/zed/` - Zed editor configuration (macOS/Linux)
+- `AppData/Roaming/Zed/` - Zed editor configuration (Windows)
 - `keyboard-layouts/` - Custom keyboard layouts and keybindings
 - `docs/` - Documentation for custom tools and configurations
 
@@ -33,6 +35,15 @@ My Claude Code configuration follows these principles:
 - **Code Style:** Readability-first, DRY, High Cohesion & Low Coupling
 - **Architecture:** Domain-Driven Design (DDD) with SOLID principles
 - **Documentation:** Unified documentation maintenance, no redundant summary files
+
+## Zed
+
+Cross-platform Zed editor configuration using chezmoi's shared template mechanism (`.chezmoitemplates/`). The same settings and keymap are deployed to platform-specific paths:
+
+- **Windows:** `AppData/Roaming/Zed/`
+- **macOS / Linux:** `~/.config/zed/`
+
+To modify Zed config, edit the shared files in `.chezmoitemplates/` — changes apply to all platforms automatically.
 
 ## IdeaVim
 

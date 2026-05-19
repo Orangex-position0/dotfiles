@@ -10,6 +10,8 @@
 - `dot_ideavimrc` - JetBrains IDEs 的 IdeaVim 配置文件
 - `dot_config/yasb/` - YASB (Yet Another Status Bar) 配置文件
 - `dot_glzr/glazewm/` - GlazeWM 配置文件（Windows 平铺窗口管理器）
+- `dot_config/zed/` - Zed 编辑器配置（macOS/Linux）
+- `AppData/Roaming/Zed/` - Zed 编辑器配置（Windows）
 - `keyboard-layouts/` - 自定义键盘布局和快捷键
 - `docs/` - 自定义工具和配置的文档
 
@@ -33,6 +35,15 @@
 - **代码风格：** 可读性优先、DRY、高内聚低耦合
 - **架构：** 领域驱动设计 (DDD) 结合 SOLID 原则
 - **文档：** 统一文档维护，不创建冗余的总结文件
+
+## Zed
+
+使用 chezmoi 共享模板机制（`.chezmoitemplates/`）管理跨平台 Zed 编辑器配置。相同的 settings 和 keymap 会自动部署到各平台的对应路径：
+
+- **Windows:** `AppData/Roaming/Zed/`
+- **macOS / Linux:** `~/.config/zed/`
+
+修改 Zed 配置时只需编辑 `.chezmoitemplates/` 下的共享文件，变更会自动应用到所有平台。
 
 ## IdeaVim
 
@@ -75,5 +86,5 @@ chezmoi apply
 
 ---
 
-**最后更新：** 2026-03-28
+**最后更新：** 2026-05-19
 **维护者：** Orangex-position0
