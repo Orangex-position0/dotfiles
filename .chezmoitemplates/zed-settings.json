@@ -8,21 +8,21 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
     "project_panel": {
-        "dock": "left",
+        "dock": "left"
     },
     "outline_panel": {
-        "dock": "left",
+        "dock": "left"
     },
     "collaboration_panel": {
-        "dock": "left",
+        "dock": "left"
     },
     "agent": {
         "dock": "right",
         "favorite_models": [],
-        "model_parameters": [],
+        "model_parameters": []
     },
     "git_panel": {
-        "dock": "left",
+        "dock": "left"
     },
 
     // ========== 1.Appearance ==========
@@ -30,12 +30,12 @@
     "theme": {
         "mode": "dark",
         "light": "One Dark",
-        "dark": "Catppuccin Macchiato",
+        "dark": "Catppuccin Macchiato"
     },
     "icon_theme": {
         "mode": "light",
         "light": "Catppuccin Macchiato",
-        "dark": "Catppuccin Macchiato",
+        "dark": "Catppuccin Macchiato"
     },
     "base_keymap": "JetBrains",
     "ui_font_size": 18,
@@ -46,21 +46,21 @@
     "relative_line_numbers": "enabled",
     "tabs": {
         "file_icons": true,
-        "git_status": true,
+        "git_status": true
     },
     "inlay_hints": {
         "enabled": true,
         "show_type_hints": true,
         "show_parameter_hints": true,
         "show_other_hints": true,
-        "show_background": true,
+        "show_background": true
     },
     "indent_guides": {
         "enabled": true,
         "line_width": 2,
         "active_line_width": 3,
         "coloring": "fixed",
-        "background_coloring": "disabled",
+        "background_coloring": "disabled"
     },
 
     // ========== 2.Basic ==========
@@ -96,13 +96,13 @@
         "**/*.min.js",
         "**/*.lock",
 
-        "**/.tmp*",
+        "**/.tmp*"
     ],
 
     // ===== 2.1 terminal =====
     "terminal": {
         "font_family": "JetBrainsMonoNL Nerd Font",
-        "copy_on_select": true,
+        "copy_on_select": true
     },
 
     // ===== 2.2 git =====
@@ -110,12 +110,12 @@
         "git_gutter": "tracked_files",
         "gutter_debounce": 100,
         "inline_blame": {
-            "enabled": false,
+            "enabled": false
         },
         "branch_picker": {
-            "show_author_name": false,
+            "show_author_name": false
         },
-        "hunk_style": "staged_hollow",
+        "hunk_style": "staged_hollow"
     },
 
     // ========== 3.Development ==========
@@ -124,17 +124,18 @@
             "tab_size": 4,
             "formatter": {
                 "external": {
-                    "command": "rustfmt",
-                },
-            },
+                    "command": "rustfmt"
+                }
+            }
         },
 
         "Go": {
+            "tab_size": 4,
+            "format_on_save": true,
+            "formatter": "gopls",
             "code_actions_on_format": {
-                "source.organizeImports": true,
-                "source.fixAll.eslint": true,
-            },
-            "formatter": [],
+                "source.organizeImports": true
+            }
         },
 
         "TypeScript": {
@@ -142,12 +143,12 @@
                 {
                     "external": {
                         "command": "prettier",
-                        "arguments": ["--stdin-filepath", "{buffer_path}"],
-                    },
+                        "arguments": ["--stdin-filepath", "{buffer_path}"]
+                    }
                 },
                 { "code_action": "source.organizeImports" },
-                { "code_action": "source.fixAll.eslint" },
-            ],
+                { "code_action": "source.fixAll.eslint" }
+            ]
         },
 
         "JavaScript": {
@@ -155,11 +156,11 @@
                 {
                     "external": {
                         "command": "prettier",
-                        "arguments": ["--stdin-filepath", "{buffer_path}"],
-                    },
+                        "arguments": ["--stdin-filepath", "{buffer_path}"]
+                    }
                 },
-                { "code_action": "source.fixAll.eslint" },
-            ],
+                { "code_action": "source.fixAll.eslint" }
+            ]
         },
 
         "TSX": {
@@ -167,30 +168,51 @@
                 {
                     "external": {
                         "command": "prettier",
-                        "arguments": ["--stdin-filepath", "{buffer_path}"],
-                    },
+                        "arguments": ["--stdin-filepath", "{buffer_path}"]
+                    }
                 },
                 { "code_action": "source.organizeImports" },
-                { "code_action": "source.fixAll.eslint" },
-            ],
-        },
+                { "code_action": "source.fixAll.eslint" }
+            ]
+        }
     },
 
     "lsp": {
         "rust-analyzer": {
             "initialization_options": {
-                "checkOnSave": {
-                    "command": "clippy",
-                },
-            },
+                "checkOnSave": true,
+                "check": {
+                    "command": "clippy"
+                }
+            }
         },
 
         "eslint": {
             "settings": {
                 "codeActionOnSave": {
-                    "rules": ["import/order"],
-                },
-            },
+                    "rules": ["import/order"]
+                }
+            }
         },
-    },
+
+        "gopls": {
+            "initialization_options": {
+                "hints": {
+                    "assignVariableTypes": true,
+                    "compositeLiteralFields": true,
+                    "compositeLiteralTypes": true,
+                    "constantValues": true,
+                    "functionTypeParameters": true,
+                    "parameterNames": true,
+                    "rangeVariableTypes": true
+                }
+            },
+            "settings": {
+                "gopls": {
+                    "usePlaceholders": true,
+                    "staticcheck": true
+                }
+            }
+        }
+    }
 }
