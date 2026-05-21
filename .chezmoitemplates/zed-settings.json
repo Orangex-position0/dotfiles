@@ -131,8 +131,8 @@
 
         "Go": {
             "tab_size": 4,
-            "format_on_save": true,
-            "formatter": "gopls",
+            "format_on_save": "on",
+            "formatter": "auto",
             "code_actions_on_format": {
                 "source.organizeImports": true
             }
