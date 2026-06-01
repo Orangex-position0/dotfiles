@@ -110,7 +110,8 @@ outer.left = 5
 
 # App shortcuts
 alt-b = 'exec-and-forget open -a /Applications/Brave\ Browser.app'
-alt-t = 'exec-and-forget open -a /Applications/Ghostty.app'
+alt-t = 'layout floating tiling'
+alt-shift-t = 'exec-and-forget open -a /Applications/Ghostty.app'
 # 修改 alt-p 为 alt-shift-p 以避免与窗口调整快捷键冲突
 alt-shift-p = 'exec-and-forget open -a /Applications/Adobe\ Premiere\ Pro\ 2024/Adobe\ Premiere\ Pro\ 2024.app/'
 alt-w = 'exec-and-forget open -a /Applications/Obsidian.app'
