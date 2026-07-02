@@ -1,8 +1,3 @@
----
-description: "DDD (Domain-Driven Design) implementation guide - copy to project .claude/rules/ when starting a DDD project"
-alwaysApply: false
----
-
 # 领域驱动设计 (DDD) 实施指南
 
 > 使用前请先判断项目是否属于 DDD 架构，再决定是否启用本指南。

@@ -1,8 +1,3 @@
----
-description: "API documentation standards and format requirements - copy to project .claude/rules/ for API-heavy projects"
-alwaysApply: false
----
-
 # 接口文档规范
 
 接口文档要满足以下条件：
