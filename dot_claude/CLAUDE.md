@@ -46,92 +46,78 @@
 - **及时清理 (Timely Cleanup)：** 在完成开发任务时，如果发现任何已无用（过时）的代码、文件或注释，应主动提出清理建议。
 
 
-## 第三部分：项目架构指南(Project Architecture Manual)
-先判断项目是否属于这其中的某个架构，再决定是否使用该指南。
+## 第三部分：项目架构指南
+项目可能采用 DDD（领域驱动设计）等架构。判断项目属于哪种架构后，按对应规范实施：
+- **DDD 实施指南**：详见 `rules/ddd-architecture.md`（Claude 在编辑相关代码时按需加载）。
 
-### 领域驱动设计 (DDD) 实施指南
+## 第四部分：文档说明
+- **接口文档规范**：详见 `rules/api-documentation.md`。
 
-#### 领域模型组织
-- **领域边界划分：** 根据业务领域划分有界上下文（Bounded Context），每个上下文内部保持概念的一致性
-- **领域对象设计：** 
-  - **实体(Entity)：** **具有唯一标识的对象**，用于表达领域中的核心业务概念。实体 = 唯一标识 + 状态属性 + 行为动作（功能），常位于 `model/eneity/` 目录下。
-  - **值对象 (Value Object)：** 用于描述领域的某个方面但**无独立身份标识的对象**，通常用于配合实体对象使用，减少Entity的关联性，常位于 `model/valobj/` 目录下。
-  - **聚合根 (Aggregate Root)：** 作为聚合的入口点，确保业务规则的一致性。
-  - **领域服务 (Domain Service)：** 封装无法归属到特定实体的业务逻辑，存放处理领域逻辑的组件，用于协调Entity 和 Value Object之间的操作。
+## 第五部分：AI 编程行为准则 (Karpathy's AI Coding Guidelines)
 
-#### 分层架构实现
-- **接口定义-api** ：因为微服务中引用的 RPC 需要对外提供接口的描述信息，也就是调用方在使用的时候，需要引入 Jar 包，让调用方好能依赖接口的定义做代理。
-	- http接口依赖倒置：将Controller层的http请求接口定义在api层，而Trigger层提供具体实现。API层（接口定义）→ Trigger层（具体实现）→ Domain层（业务逻辑）。
-	- DTO对象：供http接口使用
-- **应用封装-app** ：这是应用启动和配置的一层，如一些 aop 切面或者 config 配置，以及打包镜像都是在这一层处理。你可以把它理解为专门为了启动服务而存在的。
-	- 存放配置文件：如 `application.yml` 文件，Redis配置类等
-	- 存放mapper文件：如mybatis的 `mapper.xml` 文件
-- **领域封装-domain** ：领域模型服务，在一层中会有一个个细分的领域服务，在每个服务包中会有【model、repository、service】3部分。
-	- model：存放entity、valobj、aggregate
-	- repository：定义仓储接口，实现类写在infrastructure中
-	- service：编写领域核心业务逻辑
-- **仓储服务-infrastructure** ：基础层依赖于 domain 领域层，因为在 domain 层定义的仓储接口需要在基础层实现。这是**依赖倒置**的一种设计方式。
-	- dao包：存Dao接口
-	- po包：存po对象
-	- repository：编写domain中仓储接口的实现类
-- **触发操作-trigger** ：触发器层，用于提供接口实现、消息接收、任务执行等。所以对于这样的操作，小傅哥把它叫做触发器层。
-	- http：编写api中http接口的实现类作为Controller层
-	- job：编写定时任务
-	- listener：编写消息队列相关逻辑
-- **类型定义-types** ：通用类型定义层，在我们的系统开发中，会有很多类型的定义，包括；基本的 Response、Constants 和枚举。它会被其他的层进行引用使用。
-	- Constants：常量定义
-	- ResponseCode：统一响应
-	- AppException：自定义异常类
-	- ResponseCode：响应码枚举
-	- BaseEvent：基础事件抽象类
-- **领域编排-case（可选）**：对于较大且复杂的项目，为了防腐和提供通用服务，一般会用case层对domain领域的逻辑进行封装组合处理
+Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
-#### 统一语言 (Ubiquitous Language)
-- **命名一致性：** 代码中的类名、方法名、变量名应与业务术语保持一致
-- **权限命名规范：** 使用 `模块名:功能名:操作名` 格式，体现业务领域结构
-- **文档同步：** 确保代码、文档和业务人员使用相同的术语
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
 
-#### 领域事件处理
-- **事件驱动架构：** 通过领域事件实现不同聚合之间的松耦合通信
-- **事件存储：** 记录重要的业务事件，支持事件溯源和审计
-- **异步处理：** 对于复杂的业务流程，使用异步事件处理提高系统性能
+### 1. Think Before Coding
 
-## 第四部分: 文档说明
-### 接口文档
-接口文档要满足以下条件：
-- 接口名称要清晰
-	- 接口名要能看出接口作用
-- 接口地址是否完成
-	- 接口的 URL 地址在文档中要有完整描述，包括域名、协议、端口等
-- 请求参数规范
-	- 接口的请求参数说明要满足规范：
-		- 参数名用驼峰命名
-		- 参数类型
-		- 参数默认值
-		- 取值范围
-		- 参数格式
-		- 说明请求参数是否为“必填”
-		- 入参示例值
-		- 参数备注
-- 响应参数规范
-	- 接口的响应参数说明要满足规范：
-		- 参数名称
-		- 参数类型
-		- 参数格式
-		- 取值范围
-		- 说明响应参数是否为“必填”
-		- 出餐示例值
-- 标明请求头
-	- 文档中要标明请求头有哪些
-- 接口安全性说明
-	- 文档要包含接口安全性说明，如接口的访问授权方式、数据传输加密方式等，还要对敏感数据进行标注
-- 接口版本管理
-	- 做好接口版本管理：
-		- 在接口文档中声明版本号
-		- 使用语义化版本号
-		- 增量发布：接口变化是，先发布新版本接口，同时保留旧版本接口，后续逐步替换旧接口
-- 文档更新记录
-	- 接口文档的更新要有对应的变更记录
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+### 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+### 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+### 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+---
+
+**These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
 
 ## 额外事项
 Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.

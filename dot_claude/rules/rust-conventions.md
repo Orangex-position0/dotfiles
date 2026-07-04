@@ -1,6 +1,7 @@
 ---
-description: "Rust coding conventions - copy to project .claude/rules/ when working on a Rust project"
-alwaysApply: false
+paths:
+  - "**/*.rs"
+  - "**/Cargo.toml"
 ---
 
 # Rust 编码规范

@@ -1,6 +1,6 @@
 ---
-description: "Rust error handling best practices - copy to project .claude/rules/ when working on a Rust project"
-alwaysApply: false
+paths:
+  - "**/*.rs"
 ---
 
 # Rust 错误处理最佳实践
