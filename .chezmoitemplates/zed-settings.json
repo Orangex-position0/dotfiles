@@ -65,6 +65,8 @@
 
     // ========== 2.Basic ==========
     "tab_size": 4,
+    "colorize_brackets": true,
+    "cli_default_open_behavior": "new_window",
     // 启用文件保存时自动格式化功能
     "format_on_save": "on",
     "restore_on_startup": "last_workspace",
