@@ -39,6 +39,28 @@ cargo fix --allow-dirty
 cargo clippy --fix --allow-dirty
 ```
 
+### 待办注释扫描
+
+提交前必须运行 `cargo-todo` 扫描源码待办注释，确认所有项均已登记或处理：
+
+```bash
+cargo todo
+```
+
+扫描指定项目：
+
+```bash
+cargo todo path/to/project
+```
+
+`cargo-todo` 仅扫描源码注释、不改动代码；`todo!()` 是运行时占位宏，执行即 panic。两者职责不同，不可互相替代。
+
+安装（全局 Cargo 子命令）：
+
+```bash
+cargo install cargo-todo
+```
+
 ---
 
 ## 2. 测试

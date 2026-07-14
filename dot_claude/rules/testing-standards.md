@@ -101,6 +101,10 @@ paths:
 - 参数化测试的每个用例应该是独立的、可单独理解的
 - 测试数据应自解释（命名参数或注释说明每组数据的含义）
 
+### 5.3 参数化测试 ≠ Property-Based Testing
+
+参数化测试仍属 example-based：每个用例是固定的「输入 → 期望输出」，覆盖率受限于人工枚举。当被测对象是数据变换、解析器、算法、状态机等「输入空间巨大」的场景时，必须改用 Property-Based Testing 验证不变量。详见 [Property-Based Testing 规范](./property-based-testing.md)。
+
 ---
 
 ## 6. Mock 使用规范
@@ -151,5 +155,7 @@ paths:
 ## 8. 相关文档
 
 - **TDD 开发流程**：详见 [tdd-development-flow.md](./tdd-development-flow.md)，定义了 Red-Green-Refactor 的开发节奏
+- **Property-Based Testing 规范**：详见 [property-based-testing.md](./property-based-testing.md)，分级强制的 PBT 适用场景、框架选型与防漂移硬规则
+- **性能基准测试规范**：详见 [performance-benchmark.md](./performance-benchmark.md)，分级强制的 benchmark 适用场景、框架选型、回归判定与防漂移硬规则
 - **Rust TDD 详细规范**：详见 [tdd-rust.md](./tdd-rust.md)，Rust 特有的 `todo!()` 占位法、Property/Compile Test、AI 陷阱清单
 - **Spring Boot 测试规范**：详见 [spring-boot-testing-standards.md](./spring-boot-testing-standards.md)，Spring Boot 项目的测试注解、切片策略和 Testcontainers 实践

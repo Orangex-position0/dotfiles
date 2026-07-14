@@ -168,3 +168,11 @@ spring.datasource.url=jdbc:mysql://localhost:3306/test  // 依赖开发机本地
 - ❌ 单元测试启动 Spring 容器
 - ❌ Repository 测试 Mock 数据库
 - ❌ 集成测试 Mock 核心业务组件
+
+---
+
+## 9. 相关文档
+
+- **通用测试规范**：[testing-standards.md](./testing-standards.md)
+- **Property-Based Testing 规范**：[property-based-testing.md](./property-based-testing.md) —— Java 用 jqwik；强制档场景（序列化 / 解析 / 算法 / 状态机）必须写 PBT
+- **TDD 开发流程**：[tdd-development-flow.md](./tdd-development-flow.md)

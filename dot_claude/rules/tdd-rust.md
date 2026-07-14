@@ -78,18 +78,21 @@ pub fn add(a: i32, b: i32) -> i32 {
 
 ---
 
-## 3. Rust 四层测试分层
+## 3. Rust 五层测试分层
 
-通用测试分层（Unit / Integration / E2E）见 [测试规范](./testing-standards.md)。Rust 在此基础上增加两层特色测试：
+通用测试分层（Unit / Integration / E2E）见 [测试规范](./testing-standards.md)，性能基准测试见 [性能基准规范](./performance-benchmark.md)。Rust 在此基础上增加三层特色测试：
 
 | 层级 | 目的 | 工具 |
 |------|------|------|
 | Unit Test | 验证 trait 行为、状态转换、边界条件 | `#[cfg(test)] mod tests` + `assert!` |
 | **Property Test** | 验证不变量（对任意输入成立） | `proptest` 或 `quickcheck` |
 | **Compile Test** | 验证类型约束、生命周期规则在编译期被拒绝 | `trybuild` 或 `static_assertions` |
+| **Performance Test** | 测量执行时间、检测性能回归 | `criterion` 或 `iai-callgrind`（详见性能基准规范） |
 | Integration Test | 验证 crate 间交互、文件系统、网络行为 | `tests/` 目录 |
 
 ### 3.1 Property Test（必写场景）
+
+> 完整的 PBT 分级强制规则、框架选型与防漂移硬规则见 [Property-Based Testing 规范](./property-based-testing.md)。本节只列 Rust 特有要点。
 
 涉及数据变换的模块必须有 proptest roundtrip 测试：
 
@@ -102,6 +105,12 @@ proptest! {
     }
 }
 ```
+
+Rust 特有补充：
+
+- **shrinking 自动化**：proptest 默认对失败输入做 shrinking，报告最小反例。用 `prop_assert_eq!` / `prop_assert!` 而非 `assert_eq!`，前者失败时触发 shrinking 并返回测试失败而非 panic。
+- **失败可复现**：proptest 把失败用例持久化到 `proptest.regressions` 文件，后续持续重跑；提交该文件保证 CI 与本地一致。手动复现用环境变量 `PROPTEST_SEED`。
+- **何时不用 PBT**：固定输入-固定输出的业务结果断言、IO / 副作用、UI 渲染——继续用普通 `#[test]`，禁止硬塞 proptest。
 
 ### 3.2 Compile Test
 
