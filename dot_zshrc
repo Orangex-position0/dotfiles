@@ -1,0 +1,42 @@
+# Miniconda 配置
+# added by Miniconda 3.0.0 installer
+export PATH="/Users/chengzixu/miniconda/bin:$PATH"
+
+# conda 自动补全
+eval "$(register-python-argcomplete conda 2>/dev/null)"
+eval "$(register-python-argcomplete conda-env 2>/dev/null)"
+
+# Conda 初始化（如果存在）
+if [ -f "/Users/chengzixu/miniconda/etc/profile.d/conda.sh" ]; then
+    . "/Users/chengzixu/miniconda/etc/profile.d/conda.sh"
+    conda activate
+fi
+
+# proxy port (vpn)
+proxy_on() {
+    export HTTP_PROXY="http://127.0.0.1:7897"
+    export HTTPS_PROXY="http://127.0.0.1:7897"
+    export ALL_PROXY="socks5h://127.0.0.1:7897"
+
+    export http_proxy="$HTTP_PROXY"
+    export https_proxy="$HTTPS_PROXY"
+    export all_proxy="$ALL_PROXY"
+
+    echo "Proxy enabled: 127.0.0.1:7897"
+}
+
+proxy_off() {
+    unset HTTP_PROXY HTTPS_PROXY ALL_PROXY
+    unset http_proxy https_proxy all_proxy
+
+    echo "Proxy disabled"
+}
+
+# 加载历史搜索插件
+source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+# History Substring Search
+source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
