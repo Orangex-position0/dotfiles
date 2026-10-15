@@ -4,7 +4,25 @@
       "Read(//c/Users/Orangex-position0/.claude/skills/skill-creator/**)",
       "Bash(python scripts/init_skill.py ppp-generator --path /c/Users/Orangex-position0/.claude/skills)",
       "Bash(chezmoi managed:*)",
-      "Bash(chezmoi status:*)"
+      "Bash(chezmoi status:*)",
+      "Bash(rtk git *)",
+      "Bash(rtk ls *)",
+      "Bash(rtk read *)",
+      "Bash(rtk --version)",
+      "Bash(npm list *)",
+      "Bash(rtk pip *)",
+      "Bash(where rtk *)",
+      "Bash(rtk help *)",
+      "Bash(rtk hook *)",
+      "WebSearch",
+      "Bash(rtk gain *)",
+      "Bash(rtk discover *)",
+      "Bash(chezmoi add *)",
+      "Bash(rtk find *)",
+      "mcp__web-search-prime__web_search_prime",
+      "mcp__web-reader__webReader",
+      "Bash(chezmoi diff *)",
+      "Bash(chezmoi execute-template *)"
     ]
   }
 }

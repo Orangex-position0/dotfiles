@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 /Users/chengzixu/.claude/skills/skill-creator/scripts/init_skill.py tech-blog-coach --path /Users/chengzixu/.claude/skills)"
+      "Bash(python3 /Users/chengzixu/.claude/skills/skill-creator/scripts/init_skill.py tech-blog-coach --path /Users/chengzixu/.claude/skills)",
+      "WebSearch",
+      "mcp__web-reader__webReader",
+      "Bash(rtk ls *)",
+      "Bash(rtk find *)",
+      "Bash(bash ../../scripts/check-update.sh)",
+      "Bash(git *)"
     ]
   }
 }
