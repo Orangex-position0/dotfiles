@@ -208,7 +208,7 @@
 
         "Vue.js": {
             "enable_language_server": true,
-            "language_servers": ["vue", "..."],
+            "language_servers": ["vue-language-server", "vtsls", "..."],
             "tab_size": 2,
             "hard_tabs": false,
             "format_on_save": "on",
