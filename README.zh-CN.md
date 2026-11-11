@@ -4,37 +4,36 @@
 
 [English](README.md) | 简体中文
 
-## 概览
+## Source 与 Target 路径
 
-- `dot_claude/` - Claude Code 配置和自定义技能
-- `dot_ideavimrc` - JetBrains IDEs 的 IdeaVim 配置文件
-- `dot_config/yasb/` - YASB (Yet Another Status Bar) 配置文件
-- `dot_glzr/glazewm/` - GlazeWM 配置文件（Windows 平铺窗口管理器）
-- `dot_config/zed/` - Zed 编辑器配置（macOS/Linux）
-- `AppData/Roaming/Zed/` - Zed 编辑器配置（Windows）
-- `keyboard-layouts/` - 自定义键盘布局和快捷键
-- `docs/` - 自定义工具和配置的文档
+**Source 目录**是当前 Git 仓库，可用 `chezmoi source-path` 查看。**Target 目录**是 chezmoi 部署文件的目标目录，可用 `chezmoi target-path` 查看，通常是用户主目录。下表路径分别相对于这两个目录。
+
+| Source | Target | 用途 |
+| --- | --- | --- |
+| `dot_zshrc` | `.zshrc` | Zsh 初始化和代理辅助函数 |
+| `dot_config/symlink_zsh` | `.config/zsh`（符号链接） | 指向外部 Zsh 配置 |
+| `dot_config/aerospace/` | `.config/aerospace/` | macOS 的 AeroSpace 窗口管理器 |
+| `dot_config/sketchybar/` | `.config/sketchybar/` | macOS 的 SketchyBar 状态栏 |
+| `dot_config/yazi/` | `.config/yazi/` | Yazi 文件管理器 |
+| `dot_config/tinycast/` | `.config/tinycast/` | TinyCast 设置 |
+| `dot_config/yasb/` | `.config/yasb/` | Windows 的 YASB 状态栏 |
+| `dot_glzr/glazewm/` | `.glzr/glazewm/` | Windows 的 GlazeWM 窗口管理器 |
+| `dot_config/zed/*.tmpl` | `.config/zed/` | macOS/Linux 的 Zed 设置和快捷键 |
+| `AppData/Roaming/Zed/*.tmpl` | `AppData/Roaming/Zed/` | Windows 的 Zed 设置和快捷键 |
+| `dot_ideavimrc` | `.ideavimrc` | IdeaVim 主配置 |
+| `dot_ideavimrc.vim.tmpl` | `.ideavimrc.vim` | 独立的平台差异 IdeaVim 文件 |
+
+`dot_` 会转换为开头的 `.`，`.tmpl` 文件会经过模板渲染，`executable_` 标记可执行文件，`symlink_` 定义符号链接。`.chezmoitemplates/` 存放共享模板，不直接部署到目标目录。
+
+`README*.md`、`docs/`、`keyboard-layouts/` 和 `scripts/` 目前也在管理范围内，可能被复制到目标目录；`.chezmoiignore` 没有排除它们。
+
+**平台过滤注意事项：** `.chezmoiignore` 虽然包含平台条件，但部分模式使用了 `dot_glzr/`、`dot_config/yasb/` 等 source 名称。忽略规则匹配的是 target 路径，因此这些模式目前不会在 macOS 上排除对应的 Windows 文件。应用前请检查 `chezmoi managed`；上表的平台标注说明预期用途，不代表已经正确过滤。
 
 ## Claude Code 配置
 
-### 自定义技能
+Claude Code 配置、规则和技能已交由独立仓库管理。当前 chezmoi source 不再包含 `dot_claude/` 和 `dot_claude_settings.json.tmpl`，也不再部署 `~/.claude/` 和 `~/.claude_settings.json`。这些 target 请通过独立仓库维护，不要重新收录到 chezmoi。
 
-我为 Claude Code 开发了几个自定义技能来增强工作流程：
-
-- **PPP 生成器** - 使用 Progress-Plans-Problems 格式生成结构化的工作汇报
-- **技术博客教练** - 基于费曼学习法的技术写作教练
-- **技能创建指南** - 创建有效的 Claude Code 技能的指南
-
-📖 **详细文档：** [Claude Skills 文档](docs/Claude-skills.zh-CN.md)
-
-### 配置原则
-
-我的 Claude Code 配置遵循以下原则：
-
-- **语言：** 默认使用简体中文进行交流
-- **代码风格：** 可读性优先、DRY、高内聚低耦合
-- **架构：** 领域驱动设计 (DDD) 结合 SOLID 原则
-- **文档：** 统一文档维护，不创建冗余的总结文件
+`docs/` 中现存的 Claude Skills 文档仅供历史参考，不代表本仓库当前提供的配置。
 
 ## Zed
 
@@ -43,7 +42,7 @@
 - **Windows:** `AppData/Roaming/Zed/`
 - **macOS / Linux:** `~/.config/zed/`
 
-修改 Zed 配置时只需编辑 `.chezmoitemplates/` 下的共享文件，变更会自动应用到所有平台。
+共享配置请编辑 `.chezmoitemplates/zed-settings.json` 和 `.chezmoitemplates/zed-keymap.json`。用 `chezmoi diff` 预览，再执行 `chezmoi apply` 部署到当前机器。两个平台的模板引用同一组共享文件；其他机器需要更新仓库并应用后才会生效。
 
 ## IdeaVim
 
@@ -63,18 +62,53 @@ Windows 平铺窗口管理器配置，用于高效的窗口管理和提升生产
 
 ## 安装
 
-这个仓库使用 chezmoi 管理。要在新机器上安装这些 dotfiles：
+先按平台安装 [chezmoi](https://www.chezmoi.io/install/)。各应用及其依赖需要单独安装。
 
 ```bash
-# 安装 chezmoi
-curl -fsSL https://chezmoi.io/get | sh
+# 下载 source，暂不应用
+chezmoi init https://github.com/Orangex-position0/dotfiles.git
 
-# 初始化仓库
-chezmoi init https://github.com/yourusername/yourrepo.git
+# 查看 source 位置、受管理的 target 和待应用变更
+chezmoi source-path
+chezmoi managed
+chezmoi diff
 
-# 应用 dotfiles
+# 检查并调整配置后再应用
 chezmoi apply
 ```
+
+应用前请备份已有文件。这些是个人配置：`.zshrc` 包含本机 Miniconda 路径、Homebrew 插件加载和代理端口 `7897`；`.config/zsh` 符号链接指向 `../config-collections/zsh/.config/zsh`，其目标内容不在本仓库中。请先检查这些路径及所需工具。
+
+## 日常维护
+
+```bash
+# 编辑受管理 target 对应的 source，预览后部署
+chezmoi edit ~/.zshrc
+chezmoi diff ~/.zshrc
+chezmoi apply ~/.zshrc
+
+# 将直接修改的 target 收录回 source
+chezmoi add ~/.zshrc
+
+# 进入 source 仓库检查并提交变更
+chezmoi cd
+git status
+```
+
+Zed 请直接编辑共享模板，不要把渲染后的 target 文件重新收录为 source。Source 变更需要执行 `chezmoi apply` 才会部署，需要提交并推送后才能同步给其他机器。
+
+可选的 Git hook 安装步骤，在 source 仓库内执行：
+
+```bash
+bash scripts/install-hooks.sh
+```
+
+该脚本将 `core.hooksPath` 设置为 `.githooks/`。Pre-push hook 在 merge-base 检查发现本地分支落后远程时阻止推送，不会修改本地历史。
+
+## 文档
+
+- [Claude Skills 历史文档](docs/Claude-skills.zh-CN.md)
+- [键盘布局说明](keyboard-layouts/readme-keyboard-layouts.md)
 
 ## 贡献
 
@@ -82,9 +116,4 @@ chezmoi apply
 
 ## 许可证
 
-本仓库采用 MIT 许可证。
-
----
-
-**最后更新：** 2026-05-19
-**维护者：** Orangex-position0
+目前仓库根目录没有统一的 `LICENSE` 文件。请勿默认按 MIT 许可使用；再分发前应确认适用的授权。
