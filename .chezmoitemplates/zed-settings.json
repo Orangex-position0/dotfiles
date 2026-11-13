@@ -188,6 +188,15 @@
             "formatter": "prettier",
         },
 
+        "Java": {
+            "enable_language_server": true,
+            "language_servers": ["jdtls"],
+            "tab_size": 4,
+            "hard_tabs": false,
+            "format_on_save": "on",
+            "formatter": "language_server",
+        },
+
         "Rust": {
             "tab_size": 4,
             "formatter": {
@@ -273,6 +282,49 @@
     },
 
     "lsp": {
+        // https://github.com/zed-extensions/java
+        // JDTLS 需要 JDK 25+；Homebrew opt 路径不绑定具体补丁版本。
+        "jdtls": {
+            "settings": {
+                "java_home": "/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home",
+                "lombok_support": true,
+            },
+            // 注意：与 settings 同级，不放在 settings 内。
+            "initialization_options": {
+                "settings": {
+                    "java": {
+                        "configuration": {
+                            // 项目 JDK 与运行 JDTLS 的 JDK 分开配置。
+                            "runtimes": [
+                                {
+                                    "name": "JavaSE-21",
+                                    "path": "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home",
+                                    "default": true,
+                                },
+                            ],
+                        },
+                        "signatureHelp": {
+                            "enabled": true,
+                        },
+                        "inlayHints": {
+                            "parameterNames": {
+                                "enabled": "all",
+                            },
+                        },
+                        "format": {
+                            "enabled": true,
+                        },
+                        "maven": {
+                            "downloadSources": true,
+                        },
+                        "eclipse": {
+                            "downloadSources": true,
+                        },
+                    },
+                },
+            },
+        },
+
         // https://zed.dev/docs/languages/vue
         // 需安装 Vue 扩展；TypeScript SDK 默认从项目 node_modules 中查找。
         "vue": {
