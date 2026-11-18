@@ -6,7 +6,7 @@ CONFIG_DIR="$HOME/.config/sketchybar"
 update_space_icons() {
     local sid=$1
     local focused_workspace=$(aerospace list-workspaces --focused 2>/dev/null)
-    local has_windows=$(aerospace list-windows --workspace "$sid" 2>/dev/null | grep -c "^." || echo "0")
+    local has_windows=$(aerospace list-windows --workspace "$sid" --count 2>/dev/null)
 
     if [ "$has_windows" -gt 0 ] || [ "$sid" = "$focused_workspace" ]; then
         # 有应用或焦点工作区：显示工作区

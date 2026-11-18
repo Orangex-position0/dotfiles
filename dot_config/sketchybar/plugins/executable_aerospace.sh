@@ -3,7 +3,9 @@
 # make sure it's executable with:
 # chmod +x ~/.config/sketchybar/plugins/aerospace.sh
 
-if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
+focused_workspace=$(aerospace list-workspaces --focused 2>/dev/null)
+
+if [ "$1" = "$focused_workspace" ]; then
   # 焦点工作区：背景色高亮 + 显示
   sketchybar --set $NAME \
     drawing=on \
@@ -15,7 +17,7 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
     icon.shadow.drawing=on
 else
   # 检查工作区是否有窗口
-  has_windows=$(aerospace list-windows --workspace "$1" 2>/dev/null | grep -c "^." || echo "0")
+  has_windows=$(aerospace list-windows --workspace "$1" --count 2>/dev/null)
 
   if [ "$has_windows" -gt 0 ]; then
     # 有应用的工作区：正常显示
